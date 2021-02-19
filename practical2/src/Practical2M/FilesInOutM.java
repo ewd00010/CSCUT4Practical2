@@ -1,4 +1,4 @@
-package Practical2;
+package Practical2M;
 
 import java.io.*;
 import java.awt.*;
@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  * CSCU9T4 Java strings and files exercise.
  *
  */
-public class FilesInOut {
+public class FilesInOutM {
 // could possibly use a if statement to check for the input of -u format and adjust args within if appropriately
     public static void main(String[] args) {
         int count = 0; // counts how many personel there are
@@ -48,13 +48,14 @@ public class FilesInOut {
                 count++;
                 index = 0;
                 String details = input.nextLine(); // checking if theres another line of data
-                var detailsSplit = details.split(" "); // splits the data into 3 parts
+                var detailsSplit = details.split(" "); // splits the data into 3 or 4 parts
                 outputStore = ""; // resets after each personel
                 while(index < detailsSplit.length)
                 {   
                     // check if the string part is the DOB or not and acts accordingly
                    if(!Character.isDigit(detailsSplit[index].charAt(0)))
                    {
+                       // this if else looks for the users choice of wanting to have all uppercase
                        if(args.length == 2)
                        {
                             firstLetter = detailsSplit[index].charAt(0); // find first letter of fore/sur names
@@ -63,9 +64,15 @@ public class FilesInOut {
                             firstLetterStringUpper = String.valueOf(firstLetterUpper);
                             indexStore = detailsSplit[index].replaceFirst(firstLetterString, firstLetterStringUpper); // changing to TitleCase
                        }
-                       else
+                       else // assumes the user has entered -u
                        {
                            indexStore = detailsSplit[index].toUpperCase();
+                       }
+                       
+                       // looking to see if there is a middle initial and adding fullstop to it if so
+                       if(detailsSplit.length == 4 && index == 1)    
+                       {
+                                indexStore = indexStore.concat(".");
                        }
                     }
                    else
@@ -88,7 +95,7 @@ public class FilesInOut {
         } 
         catch (FileNotFoundException ex) 
         {
-            Logger.getLogger(FilesInOut.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FilesInOutM.class.getName()).log(Level.SEVERE, null, ex);
             System.out.printf("Error:  %s \n", ex);
         }
         
@@ -110,13 +117,11 @@ public class FilesInOut {
         } 
         catch (IOException ex) 
         {
-            Logger.getLogger(FilesInOut.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FilesInOutM.class.getName()).log(Level.SEVERE, null, ex);
             System.out.printf("Error: %s \n", ex);
         }
         System.out.println(args[0] + "  " + args[1]);
     }
-    // Finally, add code to read the filenames as arguments from the command line
 } // main
 
 // FilesInOut
-
